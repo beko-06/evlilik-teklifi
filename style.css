@@ -11,6 +11,7 @@ body {
   align-items: center;
   height: 100vh;
   font-family: 'Comic Sans MS', cursive, sans-serif;
+  overflow: hidden;
 }
 
 .container {
@@ -63,10 +64,6 @@ body {
   margin-top: 10px;
 }
 
-.ring {
-  width: 150px;
-}
-
 .hidden {
   visibility: hidden;
 }
@@ -87,7 +84,15 @@ button:hover {
   background-color: #e03e6d;
 }
 
-.ring.animate {
+/* Yüzük animasyonu */
+.animated-ring {
+  width: 150px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 20px;
+}
+
+.animate {
   animation: pop-in 1s ease-out forwards;
 }
 
@@ -105,6 +110,7 @@ button:hover {
   }
 }
 
+/* Konfeti & Havai fişek için canvas */
 canvas {
   position: absolute;
   top: 0;
