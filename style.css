@@ -1,101 +1,69 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #6a5acd, #badae9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    flex-direction: column;
+  }
 
-body {
-  background: linear-gradient(135deg, #6a5acd, #badae9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  overflow: hidden;
-}
+  #container {
+    text-align: center;
+  }
 
-.container {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  text-align: center;
-}
+  #envelope {
+    width: 200px;
+    height: 130px;
+    background: white;
+    border: 2px solid #aaa;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
 
-.envelope {
-  position: relative;
-  width: 200px;
-  height: 130px;
-  margin: 0 auto;
-  cursor: pointer;
-}
+  /* Zarf kapağı */
+  #envelope::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 100px 100px 100px;
+    border-color: transparent transparent white transparent;
+    transition: transform 1s ease-in-out;
+    transform-origin: top center;
+  }
 
-.flap {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 100px 100px 100px;
-  border-color: transparent transparent #ffffff transparent;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  transition: transform 1s ease-in-out;
-  transform-origin: top center;
-}
+  /* Kırmızı kalp zarfın üstünde */
+  #envelope::after {
+    content: "❤";
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    color: red;
+    pointer-events: none;
+  }
 
-.body {
-  width: 200px;
-  height: 100px;
-  background-color: #ffffff;
-  position: absolute;
-  bottom: 0;
-  border: 2px solid #aaa;
-  border-top: none;
-  z-index: 1;
-}
+  button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #ff4d7c;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
 
-/* Kalp şekli */
-.heart {
-  position: absolute;
-  top: 35px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-45deg);
-  width: 30px;
-  height: 30px;
-  background-color: red;
-}
-
-.heart::before,
-.heart::after {
-  content: "";
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background-color: red;
-  border-radius: 50%;
-}
-
-.heart::before {
-  top: -15px;
-  left: 0;
-}
-
-.heart::after {
-  left: 15px;
-  top: 0;
-}
-
-.animated-ring {
-  font-size: 60px;
-  text-align: center;
-  margin: 20px auto;
-  display: block;
-}
-
-.animate {
-  animation: pop-in 1s ease-out forwards;
-}
-
-@keyframes pop-in {
-  0% {
-    transfor
+  button:hover {
+    background-color: #e03e6d;
+  }
+</style>
