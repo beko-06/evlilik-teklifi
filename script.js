@@ -1,10 +1,9 @@
 const envelope = document.getElementById("envelope");
 const message = document.getElementById("message");
-const music = document.getElementById("music");
 const ring = document.getElementById("ring");
-const surpriseBtn = document.getElementById("surpriseBtn");
 const confettiCanvas = document.getElementById("confetti");
 
+// Zarf tıklanınca mesaj ve yüzük açılır
 envelope.addEventListener("click", () => {
   const flap = envelope.querySelector(".flap");
   flap.style.transform = "rotateX(180deg)";
@@ -12,16 +11,18 @@ envelope.addEventListener("click", () => {
   setTimeout(() => {
     message.style.opacity = 1;
   }, 500);
-  music.play();
-});
 
-surpriseBtn.addEventListener("click", () => {
+  // Yüzük animasyonu gösterilir
   ring.classList.remove("hidden");
   ring.classList.add("animate");
+
+  // Konfeti başlatılır
   confettiCanvas.classList.remove("hidden");
   startConfetti();
+  startFireworks();
 });
 
+// Basit konfeti efekti
 function startConfetti() {
   const canvas = document.getElementById("confetti");
   const ctx = canvas.getContext("2d");
@@ -56,4 +57,26 @@ function startConfetti() {
   }
 
   draw();
+}
+
+// Havai fişek efekti (rastgele noktalarda patlama)
+function startFireworks() {
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+
+  setInterval(() => {
+    for (let i = 0; i < 100; i++) {
+      const angle = Math.random() * 2 * Math.PI;
+      const radius = Math.random() * 80;
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const px = x + radius * Math.cos(angle);
+      const py = y + radius * Math.sin(angle);
+      const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      ctx.beginPath();
+      ctx.arc(px, py, 2, 0, 2 * Math.PI);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+  }, 3000); // Her 3 saniyede bir patlama efekti
 }
