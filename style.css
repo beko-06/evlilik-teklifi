@@ -1,81 +1,25 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ... önceki tüm CSS aynı kalıyor ... */
 
-body {
-  background: linear-gradient(135deg, #6a5acd, #badae9);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  overflow: hidden;
-}
-
-.container {
-  position: relative;
-  width: 300px;
-  height: 200px;
-}
-
-.envelope {
-  position: absolute;
-  width: 300px;
-  height: 200px;
-  cursor: pointer;
-}
-
-.flap {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 150px 173px 150px;
-  border-color: transparent transparent #c92b27 transparent;
-  position: absolute;
-  top: -173px;
-  left: 0;
-  transition: transform 1s ease-in-out;
-}
-
-.body {
-  width: 300px;
-  height: 173px;
-  background-color: #e6e6e6;
-  position: absolute;
-  bottom: 0;
-  border: 2px solid #aaa;
-}
-
-.message {
-  position: absolute;
-  top: 220px;
-  left: 50%;
-  transform: translateX(-50%);
+.animated-ring {
+  font-size: 60px;
   text-align: center;
-  opacity: 0;
-  transition: all 1s ease;
+  margin: 20px auto;
+  display: block;
+  transition: transform 0.5s ease;
 }
 
-.message h1 {
-  color: #ff4d7c;
-  font-size: 24px;
-  margin-top: 10px;
-}
-
-.hidden {
-  visibility: hidden;
+.animate {
+  animation: pop-in 1s ease-out forwards;
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 40px;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 18px;
   background-color: #ff4d7c;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -84,35 +28,8 @@ button:hover {
   background-color: #e03e6d;
 }
 
-/* Yüzük animasyonu */
-.animated-ring {
-  width: 150px;
-  margin: 0 auto;
-  display: block;
-  margin-top: 20px;
-}
-
-.animate {
-  animation: pop-in 1s ease-out forwards;
-}
-
-@keyframes pop-in {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  70% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Konfeti & Havai fişek için canvas */
 canvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
