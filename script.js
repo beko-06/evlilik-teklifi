@@ -1,9 +1,8 @@
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <script>
   const envelope = document.getElementById("envelope");
   const openBtn = document.getElementById("openBtn");
 
-  // Yüzük ve mesaj elemanlarını oluşturuyoruz
+  // Yüzük div'ini oluştur
   const ring = document.createElement("div");
   ring.textContent = "💍";
   ring.style.fontSize = "100px";
@@ -12,6 +11,7 @@
   ring.style.transition = "opacity 1s ease";
   ring.style.userSelect = "none";
 
+  // Mesaj h1'ini oluştur
   const message = document.createElement("h1");
   message.textContent = "Benimle evlenir misin?";
   message.style.color = "#ff4d7c";
@@ -24,36 +24,18 @@
   container.appendChild(ring);
   container.appendChild(message);
 
-  // Butona basınca çalışacak fonksiyon
+  // Butona tıklandığında
   openBtn.addEventListener("click", () => {
-    // Zarf kapağını açalım
-    envelope.style.setProperty("--open-rotation", "180deg");
-    envelope.style.position = "relative";
-    envelope.style.cursor = "default";
-
-    // Kapağı döndürme (pseudo elemente erişim için)
-    envelope.style.setProperty("--flap-rotation", "rotateX(180deg)");
-
-    // Kapağı açmak için zarf ::before elementini döndür
-    envelope.style.setProperty("--flap-rotation", "rotateX(180deg)");
-    envelope.style.setProperty("--flap-transition", "transform 1s ease-in-out");
-    envelope.style.setProperty("--flap-transform-origin", "top center");
-
-    // Kapağı açan CSS sınıfını eklemek yerine doğrudan ::before animasyonunu yapacağız:
-    envelope.style.setProperty("--flap-rotation", "rotateX(180deg)");
-
-    // JavaScript ile zarf ::before pseudo elementine doğrudan müdahale mümkün değil,
-    // Bunun için CSS'de zarf açık hali için sınıf ekleyelim, sonra JS'de onu ekleyelim.
-
+    // Zarfı aç (CSS sınıfı ile)
     envelope.classList.add("open");
 
-    // Yüzüğü ve mesajı görünür yap
+    // Yüzük ve mesaj yavaşça belirsin
     setTimeout(() => {
       ring.style.opacity = "1";
       message.style.opacity = "1";
     }, 1000);
 
-    // Butonu devre dışı bırak
+    // Buton devre dışı kalır
     openBtn.disabled = true;
     openBtn.style.cursor = "default";
     openBtn.style.opacity = "0.5";
@@ -62,8 +44,9 @@
     startConfettiAndFireworks();
   });
 
+  // Konfeti + Havai fişek efektleri
   function startConfettiAndFireworks() {
-    // Konfeti patlatma
+    // Konfeti efekti
     setInterval(() => {
       confetti({
         particleCount: 100,
@@ -72,7 +55,42 @@
       });
     }, 1500);
 
-    // Havai fişek efekti basit şekilde aşağıdaki gibi yapılabilir
-    // Dilersen detaylandırabiliriz
+    // Havai fişek efekti (basit canvas animasyonu)
+    const canvas = document.createElement("canvas");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "9999";
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+
+    function launchFirework(x, y) {
+      for (let i = 0; i < 100; i++) {
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = Math.random() * 100;
+        const px = x + radius * Math.cos(angle);
+        const py = y + radius * Math.sin(angle);
+        const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        ctx.beginPath();
+        ctx.arc(px, py, 2, 0, 2 * Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+      }
+
+      setTimeout(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }, 1000);
+    }
+
+    // Her 3 saniyede bir rastgele noktada havai fişek
+    setInterval(() => {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      launchFirework(x, y);
+    }, 3000);
   }
 </script>
