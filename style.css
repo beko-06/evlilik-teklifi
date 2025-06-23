@@ -1,69 +1,120 @@
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #6a5acd, #badae9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    flex-direction: column;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #6a5acd, #badae9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  flex-direction: column;
+}
 
-  #container {
-    text-align: center;
-  }
+#container {
+  text-align: center;
+}
 
+#envelope {
+  width: 200px;
+  height: 130px;
+  background: white;
+  border: 2px solid #aaa;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Zarf kapağı */
+#envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 100px 100px 100px;
+  border-color: transparent transparent white transparent;
+  transition: transform 1s ease-in-out;
+  transform-origin: top center;
+}
+
+/* Kırmızı kalp zarfın üstünde */
+#envelope::after {
+  content: "❤";
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30px;
+  color: red;
+  pointer-events: none;
+}
+
+/* Zarf açık olduğunda kapağı döndür */
+#envelope.open::before {
+  transform: rotateX(180deg);
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #ff4d7c;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #e03e6d;
+}
+
+/* Yüzük animasyonu */
+#ring {
+  font-size: 100px;
+  margin: 20px auto;
+  opacity: 0;
+  transition: opacity 1s ease;
+  user-select: none;
+}
+
+/* Evlenme mesajı */
+#message {
+  color: #ff4d7c;
+  font-size: 36px;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* Mobil uyum */
+@media (max-width: 480px) {
   #envelope {
-    width: 200px;
-    height: 130px;
-    background: white;
-    border: 2px solid #aaa;
-    position: relative;
-    cursor: pointer;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    width: 160px;
+    height: 100px;
   }
 
-  /* Zarf kapağı */
   #envelope::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 100px 100px 100px;
-    border-color: transparent transparent white transparent;
-    transition: transform 1s ease-in-out;
-    transform-origin: top center;
-  }
-
-  /* Kırmızı kalp zarfın üstünde */
-  #envelope::after {
-    content: "❤";
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 30px;
-    color: red;
-    pointer-events: none;
+    border-width: 0 80px 80px 80px;
   }
 
   button {
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #ff4d7c;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.3s;
+    font-size: 16px;
+    padding: 8px 16px;
   }
 
-  button:hover {
-    background-color: #e03e6d;
+  #envelope::after {
+    font-size: 24px;
+    top: 30px;
   }
-</style>
+
+  #ring {
+    font-size: 80px;
+  }
+
+  #message {
+    font-size: 28px;
+  }
+}
