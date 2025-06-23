@@ -5,19 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Evlenme Teklifi</title>
   <style>
-    /* Buraya CSS gelecek */
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #6a5acd, #badae9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #container {
+      text-align: center;
+    }
+    #envelope {
+      width: 200px;
+      height: 130px;
+      background: white;
+      border: 2px solid #aaa;
+      position: relative;
+      cursor: pointer;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    /* Zarf kapağı */
+    #envelope::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 100px 100px 100px;
+      border-color: transparent transparent white transparent;
+      transition: transform 1s ease-in-out;
+      transform-origin: top center;
+    }
+    /* Kırmızı kalp zarfın üstünde */
+    #envelope::after {
+      content: "❤";
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      color: red;
+      pointer-events: none;
+    }
+    /* Zarf kapağı açılınca döndürme */
+    #envelope.open::before {
+      transform: rotateX(180deg);
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #ff4d7c;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #e03e6d;
+    }
+    #ring {
+      font-size: 100px;
+      margin: 20px auto 0;
+      opacity: 0;
+      transition: opacity 1s ease;
+      user-select: none;
+    }
+    #message {
+      color: #ff4d7c;
+      font-size: 36px;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
+  <canvas id="confetti"></canvas>
   <div id="container">
-    <div id="envelope">
-      <!-- Zarf grafiği veya şekli burada olacak -->
-    </div>
+    <div id="envelope"></div>
     <button id="openBtn">Zarfı Aç</button>
+    <div id="ring">💍</div>
+    <h1 id="message">Benimle evlenir misin?</h1>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    // Buraya JavaScript gelecek
+    const envelope = document.getElementById("envelope");
+    const openBtn = document.getElementById("openBtn");
+    const ring = document.getElementById("ring");
+    const message = document.getElementById("message");
+
+    openBtn.addEventListener("click", () => {
+      // Zarf kapağı açılır
+      envelope.classList.add("open");
+
+      // Yüzük ve mesaj görünür olur
+      ring.style.opacity = "1";
+      message.style.opacity = "1";
+
+      // Buton devre dışı kalır
+      openBtn.disabled = true;
+      openBtn.style.cursor = "default";
+      openBtn.style.opacity = "0.5";
+
+      // Konfeti ve havai fişek başlat
+      startConfetti();
+    });
+
+    function startConfetti() {
+      setInterval(() => {
+        confetti({
+          particleCount: 100,
+          spread: 160,
+          origin: { y: Math.random() * 0.6 }
+        });
+      }, 1500);
+    }
   </script>
 </body>
 </html>
